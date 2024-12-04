@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validar Cédula</title>
+</head>
+<body>
+    <h1>Validar Cédula</h1>
+    <form id="formCedula">
+        <label for="cedula">Cédula:</label>
+        <input type="text" id="cedula" name="cedula" maxlength="11" required>
+        <button type="submit">Validar</button>
+    </form>
+    <p id="resultado"></p>
+
+    <script>
+        document.getElementById('formCedula').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const cedula = document.getElementById('cedula').value;
+            
+            const response = await fetch('validate_cedula.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ cedula })
+            });
+
+            const result = await response.json();
+            document.getElementById('resultado').innerText = result.mensaje;
+        });
+    </script>
+</body>
+</html>
